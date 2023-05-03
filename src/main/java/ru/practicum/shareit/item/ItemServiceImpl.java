@@ -79,4 +79,9 @@ public class ItemServiceImpl implements ItemService {
     public void delete(Long id) {
         itemStorage.delete(id);
     }
+
+    @Override
+    public List<ItemDto> searchItemByText(String text) {
+        return ItemMapper.mapToItemDto(itemStorage.searchItemByText(text));
+    }
 }

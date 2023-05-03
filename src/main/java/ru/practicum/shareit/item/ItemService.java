@@ -15,4 +15,6 @@ public interface ItemService {
     ItemDto findItemById(Long id);
 
     void delete(Long id);
+
+    List<ItemDto> searchItemByText(String text);
 }

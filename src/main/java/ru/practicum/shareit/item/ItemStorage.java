@@ -15,4 +15,6 @@ public interface ItemStorage {
     Item findItemById(Long id);
 
     void delete(Long id);
+
+    List<Item> searchItemByText(String text);
 }

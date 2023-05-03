@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.model.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,18 @@ public class InMemoryItemStorageImpl implements ItemStorage {
     public void delete(Long id) {
         items.remove(id);
         log.info("item with id {} was deleted", id);
+    }
+
+    @Override
+    public List<Item> searchItemByText(String text) {
+        if (text == null || text.isEmpty() || text.isBlank()) {
+            return new ArrayList<>();
+        }
+        return items.values().stream()
+                .filter(item -> item.getName().toLowerCase().contains(text.toLowerCase())
+                        || item.getDescription().toLowerCase().contains(text.toLowerCase()))
+                .filter(Item::getAvailable)
+                .collect(Collectors.toList());
     }
 
     private void setNextId(Item item) {
