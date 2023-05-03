@@ -14,7 +14,7 @@ import java.util.Map;
 public class InMemoryUserStorageImpl implements UserStorage {
 
     private final Map<Long, User> users = new HashMap<>();
-    private Long id = 1L;
+    private Long nextId = 1L;
 
     @Override
     public List<User> getAllUsers() {
@@ -61,6 +61,6 @@ public class InMemoryUserStorageImpl implements UserStorage {
     }
 
     private void setNextId(User user) {
-        user.setId(id++);
+        user.setId(nextId++);
     }
 }
