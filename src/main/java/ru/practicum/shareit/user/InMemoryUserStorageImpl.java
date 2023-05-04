@@ -4,10 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.UserNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
@@ -39,10 +36,7 @@ public class InMemoryUserStorageImpl implements UserStorage {
 
     @Override
     public User findUserById(Long id) {
-        if (doesIdExist(id)) {
-            return users.get(id);
-        }
-        throw new UserNotFoundException("User was not found");
+        return Optional.ofNullable(users.get(id)).orElseThrow(() -> new UserNotFoundException("User was not found"));
     }
 
     @Override
@@ -58,7 +52,7 @@ public class InMemoryUserStorageImpl implements UserStorage {
 
     @Override
     public boolean doesEmailNotExist(String email) {
-        return users.values().stream().noneMatch(user -> user.getEmail().equals(email));
+        return !users.values().stream().anyMatch(user -> user.getEmail().equals(email));
     }
 
     private void setNextId(User user) {

@@ -1,13 +1,15 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
+@Validated
 @RestController
 @RequestMapping("/items")
 public class ItemController {
@@ -42,7 +44,7 @@ public class ItemController {
     }
 
     @GetMapping(value = "/search")
-    public List<ItemDto> searchItemByText(@RequestParam String text) {
+    public List<ItemDto> searchItemByText(@NotNull @RequestParam String text) {
         return itemService.searchItemByText(text);
     }
 }
