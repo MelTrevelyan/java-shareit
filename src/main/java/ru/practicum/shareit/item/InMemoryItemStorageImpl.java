@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class InMemoryItemStorageImpl implements ItemStorage {
 
     private final Map<Long, Item> items = new HashMap<>();
-    private Long nextId = 1L;
+    private final AtomicLong nextId = new AtomicLong();
 
     @Override
     public List<Item> getAllItemsByOwner(Long id) {
@@ -65,6 +66,6 @@ public class InMemoryItemStorageImpl implements ItemStorage {
     }
 
     private void setNextId(Item item) {
-        item.setId(nextId++);
+        item.setId(nextId.incrementAndGet());
     }
 }

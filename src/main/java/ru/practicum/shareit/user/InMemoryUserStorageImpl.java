@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 @Slf4j
 public class InMemoryUserStorageImpl implements UserStorage {
 
     private final Map<Long, User> users = new HashMap<>();
-    private Long nextId = 1L;
+    private final AtomicLong nextId = new AtomicLong();
 
     @Override
     public List<User> getAllUsers() {
@@ -61,6 +62,6 @@ public class InMemoryUserStorageImpl implements UserStorage {
     }
 
     private void setNextId(User user) {
-        user.setId(nextId++);
+        user.setId(nextId.incrementAndGet());
     }
 }
