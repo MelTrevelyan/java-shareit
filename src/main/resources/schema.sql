@@ -8,7 +8,7 @@
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name varchar(200) NOT NULL,
     description varchar(2000) NOT NULL,
-    available boolean NOT NULL,
+    is_available boolean NOT NULL,
     user_id BIGINT NOT NULL,
     item_request_id BIGINT,
     CONSTRAINT fk_items_to_users FOREIGN KEY(user_id) REFERENCES users(id));
