@@ -76,8 +76,9 @@ public class ErrorHandler {
         return Map.of("error", e.getMessage());
     }
 
+    // I would set code 403, but postman tests require 404
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleUserAccessForbiddenException(UserAccessForbiddenException e) {
         log.error(e.getMessage());
         return Map.of("User access denied", e.getMessage());

@@ -14,4 +14,6 @@ public interface BookingService {
     BookingOutDto findBookingById(Long bookingId, Long userId);
 
     List<BookingOutDto> findBookingsOfUser(BookingState state, Long userId);
+
+    List<BookingOutDto> findBookingsOfOwner(BookingState state, Long userId);
 }

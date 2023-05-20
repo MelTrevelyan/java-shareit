@@ -43,4 +43,11 @@ public class BookingController {
         BookingState bookingState = BookingState.valueOf(state);
         return bookingService.findBookingsOfUser(bookingState, userId);
     }
+
+    @GetMapping("/owner")
+    public List<BookingOutDto> findBookingsOfOwner(@RequestParam(defaultValue = "ALL", required = false) String state,
+                                                   @RequestHeader("X-Sharer-User-Id") Long userId) {
+        BookingState bookingState = BookingState.valueOf(state);
+        return bookingService.findBookingsOfOwner(bookingState, userId);
+    }
 }
