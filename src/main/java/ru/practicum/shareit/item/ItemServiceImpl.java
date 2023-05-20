@@ -1,13 +1,16 @@
 package ru.practicum.shareit.item;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.booking.BookingService;
+import ru.practicum.shareit.booking.dto.BookingForOwnerDto;
 import ru.practicum.shareit.exception.ItemNotFoundException;
 import ru.practicum.shareit.exception.ItemValidationException;
 import ru.practicum.shareit.exception.NotOwnerForbiddenException;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemForOwnerDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserService;
@@ -20,22 +23,26 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository repository;
     private final UserService userService;
-
-    @Autowired
-    public ItemServiceImpl(ItemRepository repository, UserService userService) {
-        this.repository = repository;
-        this.userService = userService;
-    }
+    private final BookingService bookingService;
 
     @Override
-    public List<ItemDto> getAllItemsByOwner(Long id) {
+    public List<ItemForOwnerDto> getAllItemsByOwner(Long id) {
         UserDto userDto = userService.findUserById(id);
-        return ItemMapper.mapToItemDto(repository.findAllByOwnerId(id));
+        List<Item> items = repository.findAllByOwnerId(id);
+        List<BookingForOwnerDto> bookings;
+        List<ItemForOwnerDto> ownerItems = new ArrayList<>();
+
+        for (Item item : items) {
+            bookings = bookingService.findByItemId(item.getId());
+            ownerItems.add(ItemMapper.toItemForOwnerDto(item, bookings));
+        }
+        return ownerItems;
     }
 
     @Override

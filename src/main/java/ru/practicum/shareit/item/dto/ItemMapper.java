@@ -1,10 +1,10 @@
 package ru.practicum.shareit.item.dto;
 
+import ru.practicum.shareit.booking.dto.BookingForOwnerDto;
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class ItemMapper {
 
@@ -32,5 +32,20 @@ public class ItemMapper {
         item.setDescription(itemDto.getDescription());
         item.setAvailable(itemDto.getAvailable());
         return item;
+    }
+
+    public static ItemForOwnerDto toItemForOwnerDto(Item item, List<BookingForOwnerDto> bookings) {
+        LocalDateTime now = LocalDateTime.now();
+
+        return ItemForOwnerDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .lastBooking(bookings.stream().filter(b -> b.getStart().isBefore(now))
+                        .max(Comparator.comparing(BookingForOwnerDto::getStart)).orElse(null))
+                .nextBooking(bookings.stream().filter(b -> b.getStart().isAfter(now))
+                        .min(Comparator.comparing(BookingForOwnerDto::getStart)).orElse(null))
+                .build();
     }
 }

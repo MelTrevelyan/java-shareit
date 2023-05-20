@@ -34,4 +34,20 @@ public class BookingMapper {
         booking.setEnd(bookingDto.getEnd());
         return booking;
     }
+
+    public static BookingForOwnerDto toBookingForOwnerDto(Booking booking) {
+        return BookingForOwnerDto.builder()
+                .id(booking.getId())
+                .start(booking.getStart())
+                .end(booking.getEnd())
+                .build();
+    }
+
+    public static List<BookingForOwnerDto> mapToBookingForOwnerDto(Collection<Booking> bookings) {
+        List<BookingForOwnerDto> dtos = new ArrayList<>();
+        for (Booking booking : bookings) {
+            dtos.add(toBookingForOwnerDto(booking));
+        }
+        return dtos;
+    }
 }
