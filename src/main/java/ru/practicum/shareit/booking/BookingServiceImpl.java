@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dto.BookingDto;
-import ru.practicum.shareit.booking.dto.BookingViewDto;
 import ru.practicum.shareit.booking.dto.BookingMapper;
 import ru.practicum.shareit.booking.dto.BookingOutDto;
 import ru.practicum.shareit.exception.*;
@@ -106,7 +105,7 @@ public class BookingServiceImpl implements BookingService {
                 bookings = repository.findAllByBookerIdAndStartAfterOrderByStartDesc(userId, now);
                 break;
             case CURRENT:
-                bookings = repository.findByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(userId, now, now);
+                bookings = repository.findByBookerIdAndStartBeforeAndEndAfterOrderByEndDesc(userId, now, now);
                 break;
             default:
                 throw new UnsupportedBookingStateException("Unknown state: UNSUPPORTED_STATUS");
@@ -143,11 +142,6 @@ public class BookingServiceImpl implements BookingService {
                 throw new UnsupportedBookingStateException("Unknown state: UNSUPPORTED_STATUS");
         }
         return BookingMapper.mapToBookingDto(bookings);
-    }
-
-    @Override
-    public List<BookingViewDto> findByItemId(Long itemId) {
-        return BookingMapper.mapToBookingViewDto(repository.findByItemId(itemId));
     }
 
     private void checkCorrectTiming(Booking booking) {

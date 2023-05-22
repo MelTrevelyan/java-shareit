@@ -85,6 +85,13 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleCommentValidationException(CommentValidationException e) {
+        log.error(e.getMessage());
+        return Map.of("Validation for comment failed", e.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleUnknownException(Throwable e) {
         log.error(e.getMessage());

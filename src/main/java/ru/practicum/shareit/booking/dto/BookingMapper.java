@@ -41,14 +41,7 @@ public class BookingMapper {
                 .start(booking.getStart())
                 .end(booking.getEnd())
                 .bookerId(booking.getBooker().getId())
+                .itemId(booking.getItem().getId())
                 .build();
-    }
-
-    public static List<BookingViewDto> mapToBookingViewDto(Collection<Booking> bookings) {
-        List<BookingViewDto> dtos = new ArrayList<>();
-        for (Booking booking : bookings) {
-            dtos.add(toBookingViewDto(booking));
-        }
-        return dtos;
     }
 }

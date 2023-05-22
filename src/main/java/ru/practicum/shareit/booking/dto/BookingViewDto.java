@@ -13,4 +13,5 @@ public class BookingViewDto {
     private LocalDateTime start;
     private LocalDateTime end;
     private Long bookerId;
+    private Long itemId;
 }

@@ -34,8 +34,10 @@ public class ItemMapper {
         return item;
     }
 
-    public static ItemViewDto toItemViewForOwnerDto(Item item, List<BookingViewDto> bookings) {
+    public static ItemViewDto toItemViewForOwnerDto(Item item, List<BookingViewDto> bookings,
+                                                    List<CommentDto> comments) {
         LocalDateTime now = LocalDateTime.now();
+
 
         return ItemViewDto.builder()
                 .id(item.getId())
@@ -46,17 +48,17 @@ public class ItemMapper {
                         .max(Comparator.comparing(BookingViewDto::getStart)).orElse(null))
                 .nextBooking(bookings.stream().filter(b -> b.getStart().isAfter(now))
                         .min(Comparator.comparing(BookingViewDto::getStart)).orElse(null))
+                .comments(comments)
                 .build();
     }
 
-    public static ItemViewDto toItemViewForBookerDto(Item item) {
-        LocalDateTime now = LocalDateTime.now();
-
+    public static ItemViewDto toItemViewForBookerDto(Item item, List<CommentDto> comments) {
         return ItemViewDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
+                .comments(comments)
                 .build();
     }
 }
