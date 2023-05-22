@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class BookingForOwnerDto {
+public class BookingViewDto {
 
     private Long id;
     private LocalDateTime start;
     private LocalDateTime end;
+    private Long bookerId;
 }

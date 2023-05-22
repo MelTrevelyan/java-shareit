@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemForOwnerDto;
+import ru.practicum.shareit.item.dto.ItemViewDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemForOwnerDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemViewDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
         return itemService.getAllItemsByOwner(userId);
     }
 
@@ -40,8 +40,8 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDto findItemById(@PathVariable Long itemId) {
-        return itemService.findItemById(itemId);
+    public ItemViewDto findItemById(@PathVariable Long itemId, @RequestHeader("X-Sharer-User-Id") Long userId) {
+        return itemService.findItemById(itemId, userId);
     }
 
     @GetMapping(value = "/search")

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dto.BookingDto;
-import ru.practicum.shareit.booking.dto.BookingForOwnerDto;
+import ru.practicum.shareit.booking.dto.BookingViewDto;
 import ru.practicum.shareit.booking.dto.BookingMapper;
 import ru.practicum.shareit.booking.dto.BookingOutDto;
 import ru.practicum.shareit.exception.*;
@@ -146,8 +146,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingForOwnerDto> findByItemId(Long itemId) {
-        return BookingMapper.mapToBookingForOwnerDto(repository.findByItemId(itemId));
+    public List<BookingViewDto> findByItemId(Long itemId) {
+        return BookingMapper.mapToBookingViewDto(repository.findByItemId(itemId));
     }
 
     private void checkCorrectTiming(Booking booking) {

@@ -4,21 +4,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.booking.BookingService;
-import ru.practicum.shareit.booking.dto.BookingForOwnerDto;
+import ru.practicum.shareit.booking.Booking;
+import ru.practicum.shareit.booking.BookingRepository;
+import ru.practicum.shareit.booking.dto.BookingMapper;
 import ru.practicum.shareit.exception.ItemNotFoundException;
 import ru.practicum.shareit.exception.ItemValidationException;
 import ru.practicum.shareit.exception.NotOwnerForbiddenException;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemForOwnerDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
+import ru.practicum.shareit.item.dto.ItemViewDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.dto.UserMapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,20 +33,25 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository repository;
     private final UserService userService;
-    private final BookingService bookingService;
+    private final BookingRepository bookingRepository;
 
     @Override
-    public List<ItemForOwnerDto> getAllItemsByOwner(Long id) {
-        UserDto userDto = userService.findUserById(id);
-        List<Item> items = repository.findAllByOwnerId(id);
-        List<BookingForOwnerDto> bookings;
-        List<ItemForOwnerDto> ownerItems = new ArrayList<>();
+    public List<ItemViewDto> getAllItemsByOwner(Long id) {
+        Map<Long, Item> itemMap = repository.findAllByOwnerId(id)
+                .stream()
+                .collect(Collectors.toMap(Item::getId, Function.identity()));
 
-        for (Item item : items) {
-            bookings = bookingService.findByItemId(item.getId());
-            ownerItems.add(ItemMapper.toItemForOwnerDto(item, bookings));
-        }
-        return ownerItems;
+        Map<Long, List<Booking>> bookingMap = bookingRepository.findByItemIdIn(itemMap.keySet())
+                .stream()
+                .collect(Collectors.groupingBy(booking -> booking.getItem().getId()));
+        return itemMap.values()
+                .stream()
+                .map(item -> ItemMapper.toItemViewForOwnerDto(item, bookingMap.getOrDefault(item.getId(),
+                                Collections.emptyList())
+                        .stream()
+                        .map(BookingMapper::toBookingViewDto)
+                        .collect(Collectors.toList())))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,9 +94,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto findItemById(Long id) {
-        return ItemMapper.toItemDto(repository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Item was not found")));
+    public ItemViewDto findItemById(Long itemId, Long userId) {
+        Item item = repository.findById(itemId)
+                .orElseThrow(() -> new ItemNotFoundException("Item was not found"));
+        if (userId.equals(item.getOwner().getId())) {
+            return ItemMapper.toItemViewForOwnerDto(item,
+                    bookingRepository.findByItemId(itemId)
+                            .stream()
+                            .map(BookingMapper::toBookingViewDto)
+                            .collect(Collectors.toList()));
+        }
+        return ItemMapper.toItemViewForBookerDto(item);
     }
 
     @Override
