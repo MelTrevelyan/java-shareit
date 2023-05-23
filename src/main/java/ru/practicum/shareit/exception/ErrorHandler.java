@@ -56,6 +56,42 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleBookingNotFoundException(BookingNotFoundException e) {
+        log.error(e.getMessage());
+        return Map.of("Search for booking failed", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleBookingValidationException(BookingValidationException e) {
+        log.error(e.getMessage());
+        return Map.of("Validation for booking failed", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleUnsupportedBookingStateException(UnsupportedBookingStateException e) {
+        log.error(e.getMessage());
+        return Map.of("error", e.getMessage());
+    }
+
+    // I would set code 403, but postman tests require 404
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleUserAccessForbiddenException(UserAccessForbiddenException e) {
+        log.error(e.getMessage());
+        return Map.of("User access denied", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleCommentValidationException(CommentValidationException e) {
+        log.error(e.getMessage());
+        return Map.of("Validation for comment failed", e.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleUnknownException(Throwable e) {
         log.error(e.getMessage());
