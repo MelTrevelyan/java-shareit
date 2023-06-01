@@ -16,6 +16,8 @@ import ru.practicum.shareit.exception.NotOwnerForbiddenException;
 import ru.practicum.shareit.item.dto.*;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.request.ItemRequestService;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -39,6 +41,7 @@ public class ItemServiceImpl implements ItemService {
     private final UserService userService;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
+    private final ItemRequestService itemRequestService;
 
     @Override
     public List<ItemViewDto> getAllItemsByOwner(Long id) {
@@ -71,6 +74,10 @@ public class ItemServiceImpl implements ItemService {
         UserDto userDto = userService.findUserById(id);
         Item item = ItemMapper.toItem(itemDto);
         item.setOwner(UserMapper.toUser(userDto));
+        if (itemDto.getRequestId() != null) {
+            ItemRequest itemRequest = itemRequestService.findRequestById(itemDto.getRequestId());
+            item.setRequest(itemRequest);
+        }
         return ItemMapper.toItemDto(repository.save(item));
     }
 

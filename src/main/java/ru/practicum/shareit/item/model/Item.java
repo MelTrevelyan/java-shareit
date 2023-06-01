@@ -26,7 +26,7 @@ public class Item {
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude
     private User owner;
-    //temporary transient until Sprint add-item-requests
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "request_id")
     private ItemRequest request;
 }
