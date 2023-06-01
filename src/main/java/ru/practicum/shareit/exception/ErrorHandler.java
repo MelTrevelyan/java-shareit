@@ -92,6 +92,13 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleItemRequestNotFoundException(ItemRequestNotFoundException e) {
+        log.error(e.getMessage());
+        return Map.of("Search for ItemRequest failed", e.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleUnknownException(Throwable e) {
         log.error(e.getMessage());

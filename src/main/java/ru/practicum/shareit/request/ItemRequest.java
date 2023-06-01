@@ -4,6 +4,7 @@ package ru.practicum.shareit.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
@@ -20,8 +21,9 @@ public class ItemRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "requester_id", nullable = false)
+    @ToString.Exclude
     private User requester;
     @Column(name = "created_date")
     private LocalDateTime created;

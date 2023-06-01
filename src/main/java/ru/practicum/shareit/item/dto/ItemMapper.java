@@ -62,4 +62,12 @@ public class ItemMapper {
                 .comments(comments)
                 .build();
     }
+
+    public static ItemForRequestDto toItemForRequestDto(Item item) {
+        return ItemForRequestDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .ownerId(item.getOwner().getId())
+                .build();
+    }
 }
