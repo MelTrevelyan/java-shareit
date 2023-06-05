@@ -2,6 +2,8 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.Booking;
@@ -44,8 +46,9 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRequestService itemRequestService;
 
     @Override
-    public List<ItemViewDto> getAllItemsByOwner(Long id) {
-        Map<Long, Item> itemMap = repository.findAllByOwnerId(id)
+    public List<ItemViewDto> getAllItemsByOwner(Long id, int from, int size) {
+        Pageable pageRequest = PageRequest.of(from, size);
+        Map<Long, Item> itemMap = repository.findAllByOwnerId(id, pageRequest)
                 .stream()
                 .collect(Collectors.toMap(Item::getId, Function.identity()));
 
@@ -139,12 +142,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> searchItemByText(String text) {
+    public List<ItemDto> searchItemByText(String text, int from, int size) {
         if (text.isEmpty() || text.isBlank()) {
             return new ArrayList<>();
         }
-        return ItemMapper.mapToItemDto(repository.searchItemByText(text)
-                .stream().filter(Item::getAvailable).collect(Collectors.toList()));
+        Pageable pageRequest = PageRequest.of(from, size);
+        return ItemMapper.mapToItemDto(repository.findByNameOrDescriptionContainingIgnoreCaseAndAvailableIsTrue(text,
+                text, pageRequest));
     }
 
     @Transactional

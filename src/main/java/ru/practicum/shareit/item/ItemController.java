@@ -24,8 +24,10 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemViewDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return itemService.getAllItemsByOwner(userId);
+    public List<ItemViewDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                                @RequestParam(defaultValue = "0") int from,
+                                                @RequestParam(defaultValue = "10") int size) {
+        return itemService.getAllItemsByOwner(userId, from, size);
     }
 
     @PostMapping
@@ -46,8 +48,10 @@ public class ItemController {
     }
 
     @GetMapping(value = "/search")
-    public List<ItemDto> searchItemByText(@NotNull @RequestParam String text) {
-        return itemService.searchItemByText(text);
+    public List<ItemDto> searchItemByText(@NotNull @RequestParam String text,
+                                          @RequestParam(defaultValue = "0") int from,
+                                          @RequestParam(defaultValue = "10") int size) {
+        return itemService.searchItemByText(text, from, size);
     }
 
     @PostMapping(value = "/{itemId}/comment")

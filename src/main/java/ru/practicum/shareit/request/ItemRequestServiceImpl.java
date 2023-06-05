@@ -19,6 +19,7 @@ import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserMapper;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -50,10 +51,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         Map<Long, ItemRequest> itemRequestMap = repository.findByRequesterId(userId).stream()
                 .collect(Collectors.toMap(ItemRequest::getId, Function.identity()));
 
-        Map<Long, List<ItemForRequestDto>> itemsMap = itemRepository.getByRequestIdIn(itemRequestMap.keySet())
-                .stream()
-                .map(ItemMapper::toItemForRequestDto)
-                .collect(Collectors.groupingBy(ItemForRequestDto::getRequestId));
+        Map<Long, List<ItemForRequestDto>> itemsMap = getItemsByRequestIds(itemRequestMap.keySet());
         return itemRequestMap.values()
                 .stream()
                 .map(itemRequest -> ItemRequestMapper
@@ -69,10 +67,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         Pageable pageRequest = PageRequest.of(from, size, sort);
         Map<Long, ItemRequest> itemRequestMap = repository.findByRequesterIdNot(userId, pageRequest).stream()
                 .collect(Collectors.toMap(ItemRequest::getId, Function.identity()));
-        Map<Long, List<ItemForRequestDto>> itemsMap = itemRepository.getByRequestIdIn(itemRequestMap.keySet())
-                .stream()
-                .map(ItemMapper::toItemForRequestDto)
-                .collect(Collectors.groupingBy(ItemForRequestDto::getRequestId));
+        Map<Long, List<ItemForRequestDto>> itemsMap = getItemsByRequestIds(itemRequestMap.keySet());
         return itemRequestMap.values()
                 .stream()
                 .map(itemRequest -> ItemRequestMapper
@@ -95,5 +90,12 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Override
     public ItemRequest findRequestById(Long itemRequestId) {
         return repository.findById(itemRequestId).orElseThrow(() -> new ItemRequestNotFoundException("Item was not found"));
+    }
+
+    private Map<Long, List<ItemForRequestDto>> getItemsByRequestIds(Collection<Long> requestIds) {
+        return itemRepository.getByRequestIdIn(requestIds)
+                .stream()
+                .map(ItemMapper::toItemForRequestDto)
+                .collect(Collectors.groupingBy(ItemForRequestDto::getRequestId));
     }
 }
