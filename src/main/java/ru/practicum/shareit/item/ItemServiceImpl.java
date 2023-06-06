@@ -47,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemViewDto> getAllItemsByOwner(Long id, int from, int size) {
+        UserDto owner = userService.findUserById(id);
         Pageable pageRequest = PageRequest.of(from, size);
         Map<Long, Item> itemMap = repository.findAllByOwnerId(id, pageRequest)
                 .stream()
@@ -67,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
                 .map(item -> ItemMapper.toItemViewForOwnerDto(item,
                         bookingMap.getOrDefault(item.getId(), Collections.emptyList()),
                         commentMap.getOrDefault(item.getId(), Collections.emptyList())
-                        ))
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -115,6 +116,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemViewDto findItemById(Long itemId, Long userId) {
+        UserDto userDto = userService.findUserById(userId);
         Item item = findItemByIdFromRepository(itemId);
         List<CommentDto> comments = commentRepository.findAllByItemId(itemId)
                 .stream()
