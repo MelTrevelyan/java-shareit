@@ -129,7 +129,7 @@ public class ItemControllerTest {
     void searchItemByText_whenWithoutParams_thenStatusOkAndParamIsDefault() {
         long userId = 1L;
         List<ItemDto> items = List.of(itemDto);
-        when(itemService.searchItemByText( "item", 0, 10)).thenReturn(items);
+        when(itemService.searchItemByText("item", 0, 10)).thenReturn(items);
 
         String result = mockMvc.perform(get("/items/search")
                         .header("X-Sharer-User-Id", userId)
@@ -139,7 +139,7 @@ public class ItemControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        verify(itemService).searchItemByText( "item", 0, 10);
+        verify(itemService).searchItemByText("item", 0, 10);
         assertEquals(objectMapper.writeValueAsString(items), result);
     }
 
