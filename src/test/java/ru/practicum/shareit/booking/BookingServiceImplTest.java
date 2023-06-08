@@ -49,11 +49,12 @@ public class BookingServiceImplTest {
 
     @BeforeEach
     public void initialize() {
+        LocalDateTime now = LocalDateTime.now();
         owner = new User(1L, "owner", "owner@mail.ru");
         user = new User(2L, "user", "user@mail.ru");
         item = new Item(1L, "item", "description", true, owner, null);
-        bookingDto = new BookingDto(1L, 1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusDays(1), BookingStatus.WAITING);
-        booking = new Booking(1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusDays(1), item, user, BookingStatus.WAITING);
+        bookingDto = new BookingDto(1L, 1L, now.plusHours(1), now.plusDays(1), BookingStatus.WAITING);
+        booking = new Booking(1L, now.plusHours(1), now.plusDays(1), item, user, BookingStatus.WAITING);
         itemDto = new ItemDto(1L, "item", "description", true, null);
     }
 

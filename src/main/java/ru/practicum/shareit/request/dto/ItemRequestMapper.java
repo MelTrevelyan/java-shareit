@@ -17,14 +17,6 @@ public class ItemRequestMapper {
         return new ItemRequestDto(itemRequest.getId(), itemRequest.getDescription(), itemRequest.getCreated());
     }
 
-    public static ItemRequestOutDto toItemRequestOutDto(ItemRequest itemRequest) {
-        return ItemRequestOutDto.builder()
-                .id(itemRequest.getId())
-                .description(itemRequest.getDescription())
-                .created(itemRequest.getCreated())
-                .build();
-    }
-
     public static ItemRequestOutDto toItemRequestOutDtoWithAnswers(ItemRequest itemRequest,
                                                                    List<ItemForRequestDto> items) {
         return ItemRequestOutDto.builder()

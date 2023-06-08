@@ -10,6 +10,7 @@ import ru.practicum.shareit.exception.ItemRequestNotFoundException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.dto.ItemForRequestDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.ItemRequestInDto;
 import ru.practicum.shareit.request.dto.ItemRequestMapper;
@@ -93,8 +94,8 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     }
 
     private Map<Long, List<ItemForRequestDto>> getItemsByRequestIds(Collection<Long> requestIds) {
-        return itemRepository.getByRequestIdIn(requestIds)
-                .stream()
+        List<Item> items = itemRepository.getByRequestIdIn(requestIds);
+        return items.stream()
                 .map(ItemMapper::toItemForRequestDto)
                 .collect(Collectors.groupingBy(ItemForRequestDto::getRequestId));
     }

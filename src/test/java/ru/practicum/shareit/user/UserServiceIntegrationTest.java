@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
+import ru.practicum.shareit.exception.UserValidationException;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
@@ -68,6 +69,16 @@ public class UserServiceIntegrationTest {
         assertEquals(1L, result.getId());
         assertEquals(userDto.getName(), result.getName());
         assertEquals(userDto.getEmail(), result.getEmail());
+    }
+
+    @Test
+    void createUser_whenUserEmailNull_thenUserValidationException() {
+        UserDto userDto = UserDto.builder()
+                .name("user")
+                .email(null)
+                .build();
+
+        assertThrows(UserValidationException.class, () -> userService.create(userDto));
     }
 
     @Test
