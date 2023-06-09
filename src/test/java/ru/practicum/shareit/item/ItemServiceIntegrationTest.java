@@ -55,7 +55,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void getAllItemsByOwner_whenDbIsEmpty_thenReturnEmptyList() {
+    void getAllItemsByOwnerWhenDbIsEmptyThenReturnEmptyList() {
         int from = 0;
         int size = 10;
         userRepository.save(owner);
@@ -66,7 +66,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void getAllItems_whenDbHasOneItem_thenReturnList() {
+    void getAllItemsWhenDbHasOneItemThenReturnList() {
         int from = 0;
         int size = 10;
         userRepository.save(owner);
@@ -79,7 +79,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void createItem_successful() {
+    void createItemSuccessful() {
         userRepository.save(owner);
         ItemDto itemDto = ItemMapper.toItemDto(item);
 
@@ -90,7 +90,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void createItemWithRequest_successful() {
+    void createItemWithRequestSuccessful() {
         userRepository.save(owner);
         userRepository.save(user);
         requestRepository.save(request);
@@ -105,7 +105,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void updateItem_Successful() {
+    void updateItemSuccessful() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -123,7 +123,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void updateItem_withUserNotTheOwner_fail() {
+    void updateItemWithUserNotTheOwnerFail() {
         userRepository.save(owner);
         userRepository.save(user);
         item.setOwner(owner);
@@ -139,7 +139,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void updateItem_withEmptyUpdate_fail() {
+    void updateItemWithEmptyUpdateFail() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -150,7 +150,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void findItemById_successful() {
+    void findItemByIdSuccessful() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -163,7 +163,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void findItemById_withNotRegisteredUser_fail() {
+    void findItemByIdWithNotRegisteredUserFail() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -179,7 +179,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void findItemById_itemNotFound_fail() {
+    void findItemByIdItemNotFoundFail() {
         userRepository.save(owner);
 
         ItemDto itemUpdate = ItemDto.builder()
@@ -207,7 +207,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void searchItemByText_returnEmptyList() {
+    void searchItemByTextReturnEmptyList() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -218,7 +218,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void searchItemByText_successful() {
+    void searchItemByTextSuccessful() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -230,7 +230,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void addComment_successful() {
+    void addCommentSuccessful() {
         userRepository.save(owner);
         userRepository.save(user);
         item.setOwner(owner);
@@ -245,7 +245,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void addComment_withItemNotFound_fail() {
+    void addCommentWithItemNotFoundFail() {
         userRepository.save(owner);
         userRepository.save(user);
         CommentDto commentDto = CommentMapper.toCommentDto(comment);
@@ -255,7 +255,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void addComment_withUserNotFound_fail() {
+    void addCommentWithUserNotFoundFail() {
         userRepository.save(owner);
         item.setOwner(owner);
         itemRepository.save(item);
@@ -266,7 +266,7 @@ class ItemServiceIntegrationTest {
     }
 
     @Test
-    void addComment_withoutBooking_fail() {
+    void addCommentWithoutBookingFail() {
         userRepository.save(owner);
         userRepository.save(user);
         item.setOwner(owner);

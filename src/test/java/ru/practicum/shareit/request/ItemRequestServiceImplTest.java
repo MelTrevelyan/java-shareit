@@ -58,7 +58,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void create_fail_userNotFound() {
+    public void createFailUserNotFound() {
         long userId = 1;
         ItemRequestInDto requestInDto = new ItemRequestInDto("request");
         ItemRequest request = ItemRequestMapper.toItemRequest(requestInDto);
@@ -69,7 +69,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getUserRequestsWithAnswers_successful_Test() {
+    public void getUserRequestsWithAnswersSuccessfulTest() {
         long userId = 2;
         when(userService.findUserById(userId)).thenReturn(UserMapper.toUserDto(requester));
         when(repository.findByRequesterId(userId)).thenReturn(List.of(itemRequest));
@@ -81,7 +81,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getUserRequestsWithAnswers_fail_userNotFound() {
+    public void getUserRequestsWithAnswersFailUserNotFound() {
         long userId = 2;
         when(userService.findUserById(userId)).thenThrow(new UserNotFoundException(""));
 
@@ -89,7 +89,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getRequestsOfOthers_successful_Test() {
+    public void getRequestsOfOthersSuccessfulTest() {
         long userId = 1;
         int from = 0;
         int size = 10;
@@ -105,7 +105,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getRequestsOfOthers_fail_userNotFound() {
+    public void getRequestsOfOthersFailUserNotFound() {
         long userId = 1;
         int from = 0;
         int size = 10;
@@ -115,7 +115,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getItemRequest_successful_Test() {
+    public void getItemRequestSuccessfulTest() {
         long userId = 2;
         long requestId = 1;
         when(userService.findUserById(userId)).thenReturn(UserMapper.toUserDto(requester));
@@ -129,7 +129,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getItemRequest_fail_userNotFound() {
+    public void getItemRequestFailUserNotFound() {
         long userId = 2;
         long requestId = 1;
         when(userService.findUserById(userId)).thenThrow(new UserNotFoundException(""));
@@ -138,7 +138,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void getItemRequest_fail_requestNotFound() {
+    public void getItemRequestFailRequestNotFound() {
         long userId = 2;
         long requestId = 1;
         when(userService.findUserById(userId)).thenReturn(UserMapper.toUserDto(requester));
@@ -148,7 +148,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void findRequestByIdTest_successful() {
+    public void findRequestByIdTestSuccessful() {
         long requestId = 1;
         when(repository.findById(requestId)).thenReturn(Optional.of(itemRequest));
 
@@ -160,7 +160,7 @@ public class ItemRequestServiceImplTest {
     }
 
     @Test
-    public void findRequestByIdTest_fail_requestNotFound() {
+    public void findRequestByIdTestFailRequestNotFound() {
         long requestId = 1;
         when(repository.findById(requestId)).thenThrow(new ItemRequestNotFoundException(""));
 

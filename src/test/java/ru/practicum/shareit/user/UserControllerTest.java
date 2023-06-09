@@ -33,7 +33,7 @@ public class UserControllerTest {
 
     @SneakyThrows
     @Test
-    public void testCreateUser_success() {
+    public void testCreateUserSuccess() {
         when(userService.create(userDto)).thenReturn(userDto);
 
         String result = mockMvc.perform(post("/users")
@@ -49,7 +49,7 @@ public class UserControllerTest {
 
     @SneakyThrows
     @Test
-    public void testCreateUser_fail_wrongEmail() {
+    public void testCreateUserFailWrongEmail() {
         UserDto userDto1 = userDto;
         userDto1.setEmail("111");
 
@@ -79,7 +79,7 @@ public class UserControllerTest {
 
     @SneakyThrows
     @Test
-    public void testUpdateUser_fail_wrongEmail() {
+    public void testUpdateUserFailWrongEmail() {
         UserDto userDto1 = userDto;
         userDto1.setEmail("111");
         mockMvc.perform(patch("/users/{userId}", userDto.getId())
@@ -92,7 +92,7 @@ public class UserControllerTest {
 
     @SneakyThrows
     @Test
-    public void testUpdateUser_success() {
+    public void testUpdateUserSuccess() {
         when(userService.update(userDto, userDto.getId())).thenReturn(userDto);
 
         String result = mockMvc.perform(patch("/users/{userId}", userDto.getId())

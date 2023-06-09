@@ -43,7 +43,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getUserRequestsWithAnswers_successful_thenReturnListOfRequest() {
+    void getUserRequestsWithAnswersSuccessfulThenReturnListOfRequest() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
         when(service.getUserRequestsWithAnswers(userId)).thenReturn(requests);
@@ -61,7 +61,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getItemRequest_successful_thenReturnRequest() {
+    void getItemRequestSuccessfulThenReturnRequest() {
         long userId = 1L;
         long requestId = 2L;
         when(service.getItemRequest(userId, requestId)).thenReturn(outDto);
@@ -79,7 +79,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getRequestsOfOthers_whenWithoutParams_thenStatusOkAndParamIsDefault() {
+    void getRequestsOfOthersWhenWithoutParamsThenStatusOkAndParamIsDefault() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
         when(service.getRequestsOfOthers(userId, 0, 10)).thenReturn(requests);
@@ -97,7 +97,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getRequestsOfOthers_whenWithoutSizeParam_thenStatusOkAndSizeParamIsDefault() {
+    void getRequestsOfOthersWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
         when(service.getRequestsOfOthers(userId, 1, 10)).thenReturn(requests);
@@ -116,7 +116,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getRequestsOfOthers_whenWithParams_thenStatusOk() {
+    void getRequestsOfOthersWhenWithParamsThenStatusOk() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
         when(service.getRequestsOfOthers(userId, 2, 20)).thenReturn(requests);
@@ -136,7 +136,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getListOfItemRequestByAllUsers_whenParamFromLessZero_thenStatusBadRequest() {
+    void getListOfItemRequestByAllUsersWhenParamFromLessZeroThenStatusBadRequest() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
         when(service.getRequestsOfOthers(userId, -10, 20)).thenReturn(requests);
@@ -152,7 +152,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getRequestsOfOthers_whenParamSizeLessZero_thenStatusBadRequest() {
+    void getRequestsOfOthersWhenParamSizeLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/requests/all")
@@ -166,7 +166,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void getListOfItemRequestByAllUsers_whenParamSizeIsZero_thenStatusBadRequest() {
+    void getListOfItemRequestByAllUsersWhenParamSizeIsZeroThenStatusBadRequest() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);
 
@@ -181,7 +181,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void createItemRequest_whenRequestIsNull_thenReturnBadRequest() {
+    void createItemRequestWhenRequestIsNullThenReturnBadRequest() {
         long userId = 1L;
         ItemRequestInDto itemRequestDtoIn = new ItemRequestInDto(null);
 
@@ -196,7 +196,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void createItemRequest_whenRequestIsBlank_thenReturnBadRequest() {
+    void createItemRequestWhenRequestIsBlankThenReturnBadRequest() {
         long userId = 1L;
         ItemRequestInDto itemRequestDtoIn = new ItemRequestInDto("");
 
@@ -211,7 +211,7 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
-    void createItemRequest_successful_thenReturnStatusOk() {
+    void createItemRequestSuccessfulThenReturnStatusOk() {
         long userId = 1L;
         ItemRequestInDto itemRequestDtoIn = new ItemRequestInDto("desc");
 

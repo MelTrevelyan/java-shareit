@@ -75,7 +75,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void getAllItems_whenUserNotFound_thenThrowUserNotFoundException() {
+    public void getAllItemsWhenUserNotFoundThenThrowUserNotFoundException() {
         long ownerId = 1L;
         int from = 0;
         int size = 10;
@@ -85,7 +85,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void getAllItems_withoutBookings_thenReturnItemWithLastAndNextBookingsAreNull() {
+    public void getAllItemsWithoutBookingsThenReturnItemWithLastAndNextBookingsAreNull() {
         long ownerId = 1L;
         int from = 0;
         int size = 10;
@@ -102,7 +102,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void getAllItems_withBookings_thenReturnItemWithBookings() {
+    public void getAllItemsWithBookingsThenReturnItemWithBookings() {
         long ownerId = 1L;
         int from = 0;
         int size = 10;
@@ -119,7 +119,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void createItem_whenUserNotFound_thenThrowUserNotFoundException() {
+    public void createItemWhenUserNotFoundThenThrowUserNotFoundException() {
         long ownerId = 1L;
         when(userService.findUserById(ownerId)).thenThrow(new UserNotFoundException(""));
 
@@ -127,7 +127,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void createItem_thenReturnItemDto() {
+    public void createItemThenReturnItemDto() {
         UserDto userDto = UserMapper.toUserDto(owner);
         when(userService.findUserById(owner.getId())).thenReturn(userDto);
         when(itemRequestService.findRequestById(request.getId())).thenReturn(request);
@@ -139,7 +139,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void updateItem_whenUserNotFound_thenThrowUserNotFoundException() {
+    public void updateItemWhenUserNotFoundThenThrowUserNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
         when(userService.findUserById(ownerId)).thenThrow(new UserNotFoundException(""));
@@ -148,7 +148,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void updateItem_whenItemNotFound_thenThrowItemNotFoundException() {
+    public void updateItemWhenItemNotFoundThenThrowItemNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
         when(userService.findUserById(ownerId)).thenReturn(UserMapper.toUserDto(owner));
@@ -158,7 +158,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void updateItem_whenUserNotOwner_thenThrowNotOwnerForbiddenException() {
+    public void updateItemWhenUserNotOwnerThenThrowNotOwnerForbiddenException() {
         long userId = 2L;
         long itemId = 1L;
         when(userService.findUserById(userId)).thenReturn(UserMapper.toUserDto(user));
@@ -168,7 +168,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void updateItem_thenReturnUpdatedItemDto() {
+    public void updateItemThenReturnUpdatedItemDto() {
         long ownerId = 1L;
         long itemId = 1L;
         ItemDto dto = itemDto;
@@ -184,7 +184,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void findItemById_whenItemNotFound_thenThrowItemNotFoundException() {
+    public void findItemByIdWhenItemNotFoundThenThrowItemNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
         when(userService.findUserById(ownerId)).thenReturn(UserMapper.toUserDto(owner));
@@ -194,7 +194,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void findItemById_whenOwnerNotFound_thenThrowItemNotFoundException() {
+    public void findItemByIdWhenOwnerNotFoundThenThrowItemNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
 
@@ -204,7 +204,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void findItemById_forOwner_thenReturnItemViewForOwnerDto() {
+    public void findItemByIdForOwnerThenReturnItemViewForOwnerDto() {
         long ownerId = 1L;
         long itemId = 1L;
         when(userService.findUserById(ownerId)).thenReturn(UserMapper.toUserDto(owner));
@@ -219,10 +219,6 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void findItemById_forUser_thenReturnItemViewForUserDto() {
-    }
-
-    @Test
     public void deleteItem() {
         long itemId = 1L;
 
@@ -232,7 +228,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void searchItemByName_whenTextIsBlank_thenReturnEmptyList() {
+    public void searchItemByNameWhenTextIsBlankThenReturnEmptyList() {
         int from = 0;
         int size = 10;
         String text = "";
@@ -243,7 +239,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void searchItemByName_thenReturnItemDto() {
+    public void searchItemByNameThenReturnItemDto() {
         int from = 0;
         int size = 10;
         String text = "item";
@@ -257,16 +253,8 @@ public class ItemServiceImplTest {
         assertEquals(1, result.get(0).getId());
     }
 
-//    @Test
-//    public void addComment_thenReturnCommentDto() {
-//        long ownerId = 1L;
-//        long itemId = 1L;
-//        when(userService.findUserById(ownerId)).thenReturn(UserMapper.toUserDto(owner));
-//        when(itemRepository.findById(itemId)).thenReturn(Optional.of(item));
-//    }
-
     @Test
-    public void addComment_whenUserNotFound_thenThrowUserNotFoundException() {
+    public void addCommentWhenUserNotFoundThenThrowUserNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
 
@@ -277,7 +265,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void addComment_whenItemNotFound_thenThrowItemNotFoundException() {
+    public void addCommentWhenItemNotFoundThenThrowItemNotFoundException() {
         long ownerId = 1L;
         long itemId = 1L;
 

@@ -24,7 +24,7 @@ public class UserServiceIntegrationTest {
     private final UserRepository userRepository;
 
     @Test
-    void getAllUsers_whenDbIsEmpty_thenReturnEmptyList() {
+    void getAllUsersWhenDbIsEmptyThenReturnEmptyList() {
 
         List<UserDto> result = userService.getAllUsers();
 
@@ -32,7 +32,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void getAllUsers_whenDbHasTwoUsers_thenReturnList() {
+    void getAllUsersWhenDbHasTwoUsersThenReturnList() {
         User user1 = new User(0L, "user1", "one@ru");
         User user2 = new User(0L, "user2", "two@ru");
         userRepository.save(user1);
@@ -46,7 +46,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void createUser_whenUserHasSameEmail_thenConflictException() {
+    void createUserWhenUserHasSameEmailThenConflictException() {
         User user = new User(0L, "user", "test@ru");
         userRepository.save(user);
         UserDto userDto = UserDto.builder()
@@ -58,7 +58,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void createUser_thenReturnUserDto() {
+    void createUserThenReturnUserDto() {
         UserDto userDto = UserDto.builder()
                 .name("user")
                 .email("test@ru")
@@ -72,7 +72,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void createUser_whenUserEmailNull_thenUserValidationException() {
+    void createUserWhenUserEmailNullThenUserValidationException() {
         UserDto userDto = UserDto.builder()
                 .name("user")
                 .email(null)
@@ -82,7 +82,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void updateUser_successfully_thenReturnUpdatedUserDto() {
+    void updateUserSuccessfullyThenReturnUpdatedUserDto() {
         User userOld = new User(0L, "userOld", "old@ru");
         userRepository.save(userOld);
         UserDto userUpdate = UserDto.builder()
@@ -98,7 +98,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void deleteUser_thenBdIsEmpty() {
+    void deleteUserThenBdIsEmpty() {
         User user = new User(0L, "userOld", "old@ru");
 
         userRepository.save(user);
@@ -111,7 +111,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    void getUserById_thenReturnCorrectUserDto() {
+    void getUserByIdThenReturnCorrectUserDto() {
         User userOld = new User(0L, "userOld", "old@ru");
         User user = new User(0L, "user", "user@ru");
 

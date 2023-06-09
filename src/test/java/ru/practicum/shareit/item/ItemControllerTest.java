@@ -38,7 +38,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    public void getAllItemsByOwner_successful() {
+    public void getAllItemsByOwnerSuccessful() {
         ItemViewDto itemViewDto = ItemViewDto.builder()
                 .id(1L)
                 .name("item")
@@ -61,7 +61,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void getAllItems_whenParamStartLessZero_thenStatusBadRequest() {
+    void getAllItemsWhenParamStartLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mockMvc.perform(get("/items")
@@ -75,7 +75,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void getAllItems_whenParamSizeLessZero_thenStatusBadRequest() {
+    void getAllItemsWhenParamSizeLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mockMvc.perform(get("/items")
@@ -89,7 +89,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void getAllItems_whenWithoutSizeParam_thenStatusOkAndSizeParamIsDefault() {
+    void getAllItemsWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
         long userId = 1L;
         List<ItemViewDto> items = List.of(ItemViewDto.builder().build());
         when(itemService.getAllItemsByOwner(userId, 2, 10)).thenReturn(items);
@@ -108,7 +108,7 @@ public class ItemControllerTest {
 
     @Test
     @SneakyThrows
-    void findItemById_successful_thenReturnItemDto() {
+    void findItemByIdSuccessfulThenReturnItemDto() {
         long userId = 1L;
         long itemId = 2L;
         ItemViewDto itemViewDto = ItemViewDto.builder().build();
@@ -126,7 +126,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void searchItemByText_whenWithoutParams_thenStatusOkAndParamIsDefault() {
+    void searchItemByTextWhenWithoutParamsThenStatusOkAndParamIsDefault() {
         long userId = 1L;
         List<ItemDto> items = List.of(itemDto);
         when(itemService.searchItemByText("item", 0, 10)).thenReturn(items);
@@ -145,7 +145,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void searchItemByText_whenParamStartLessZero_thenStatusBadRequest() {
+    void searchItemByTextWhenParamStartLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mockMvc.perform(get("/items/search")
@@ -160,7 +160,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void searchItemByText_whenParamSizeLessZero_thenStatusBadRequest() {
+    void searchItemByTextWhenParamSizeLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mockMvc.perform(get("/items/search")
@@ -175,7 +175,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void searchItemByText_whenWithoutSizeParam_thenStatusOkAndSizeParamIsDefault() {
+    void searchItemByTextWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
         long userId = 1L;
         List<ItemDto> items = List.of(itemDto);
         when(itemService.searchItemByText("item", 2, 10)).thenReturn(items);
@@ -195,7 +195,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void searchItemByText_whenWithParams_thenStatusOk() {
+    void searchItemByTextWhenWithParamsThenStatusOk() {
         long userId = 1L;
         String search = "item";
         List<ItemDto> items = List.of(itemDto);
@@ -217,7 +217,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_whenNameIsNull_thenReturnBadRequest() {
+    void createItemWhenNameIsNullThenReturnBadRequest() {
         long userId = 1L;
         ItemDto newItemDto = itemDto;
         newItemDto.setName(null);
@@ -233,7 +233,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_whenNameIsEmpty_thenReturnBadRequest() {
+    void createItemWhenNameIsEmptyThenReturnBadRequest() {
         long userId = 1L;
         ItemDto newItemDto = itemDto;
         newItemDto.setName("");
@@ -249,7 +249,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_whenDescriptionIsNull_thenReturnBadRequest() {
+    void createItemWhenDescriptionIsNullThenReturnBadRequest() {
         long userId = 1L;
         ItemDto newItemDto = itemDto;
         newItemDto.setDescription(null);
@@ -265,7 +265,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_whenDescriptionIsEmpty_thenReturnBadRequest() {
+    void createItemWhenDescriptionIsEmptyThenReturnBadRequest() {
         long userId = 1L;
         ItemDto newItemDto = itemDto;
         newItemDto.setDescription("");
@@ -281,7 +281,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_whenAvailableIsNull_thenReturnBadRequest() {
+    void createItemWhenAvailableIsNullThenReturnBadRequest() {
         long userId = 1L;
         ItemDto newItemDto = itemDto;
         newItemDto.setAvailable(null);
@@ -297,7 +297,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void createItem_successful_thenReturnStatusOk() {
+    void createItemSuccessfulThenReturnStatusOk() {
         long userId = 1L;
         when(itemService.create(itemDto, userId)).thenReturn(itemDto);
 
@@ -315,7 +315,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void addComment_whenCommentIsNull_thenReturnBadRequest() {
+    void addCommentWhenCommentIsNullThenReturnBadRequest() {
         long userId = 1L;
         long itemId = 2L;
         CommentDto comment = CommentDto.builder().build();
@@ -331,7 +331,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void addComment_whenCommentIsEmpty_thenReturnBadRequest() {
+    void addCommentWhenCommentIsEmptyThenReturnBadRequest() {
         long userId = 1L;
         long itemId = 2L;
         CommentDto comment = CommentDto.builder()
@@ -349,7 +349,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void addComment_successful_thenReturnStatusIsOk() {
+    void addCommentSuccessfulThenReturnStatusIsOk() {
         long userId = 1L;
         long itemId = 2L;
         CommentDto comment = CommentDto.builder()
@@ -377,7 +377,7 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void updateItem_successful_thenReturnStatusIsOk() {
+    void updateItemSuccessfulThenReturnStatusIsOk() {
         long userId = 1L;
         long itemId = 2L;
         when(itemService.update(itemDto, itemId, userId)).thenReturn(itemDto);

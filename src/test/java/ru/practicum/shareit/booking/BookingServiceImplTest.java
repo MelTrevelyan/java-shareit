@@ -59,7 +59,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void create_successful() {
+    public void createSuccessful() {
         long userId = 2;
         long itemId = 1;
         UserDto userDto = UserMapper.toUserDto(user);
@@ -74,7 +74,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void create_fail_bookerNotFound() {
+    public void createFailBookerNotFound() {
         long userId = 2;
         when(userService.findUserById(userId)).thenThrow(new UserNotFoundException(""));
 
@@ -82,7 +82,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void create_fail_itemNotFound() {
+    public void createFailItemNotFound() {
         long itemId = 1;
         long userId = 2;
         UserDto userDto = UserMapper.toUserDto(user);
@@ -93,7 +93,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void setBookingApproval_successful() {
+    public void setBookingApprovalSuccessful() {
         long bookingId = 1;
         long userId = 1;
         UserDto userDto = UserMapper.toUserDto(owner);
@@ -107,7 +107,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void setBookingApproval_fail_bookingNotFound() {
+    public void setBookingApprovalFailBookingNotFound() {
         long bookingId = 1;
         long userId = 1;
         UserDto userDto = UserMapper.toUserDto(owner);
@@ -119,7 +119,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void setBookingApproval_fail_whenNotOwnerOfItem() {
+    public void setBookingApprovalFailWhenNotOwnerOfItem() {
         User user1 = new User(3L, "user", "user@mail.ru");
         UserDto userDto = UserMapper.toUserDto(user1);
         long bookingId = 1;
@@ -132,7 +132,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void setBookingApproval_fail_whenUserIsBooker() {
+    public void setBookingApprovalFailWhenUserIsBooker() {
         long bookingId = 1;
         long userId = 2;
         UserDto userDto = UserMapper.toUserDto(user);
@@ -144,7 +144,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void setBookingApproval_fail_whenBookingStatusIsNotWaiting() {
+    public void setBookingApprovalFailWhenBookingStatusIsNotWaiting() {
         Booking booking1 = booking;
         booking1.setStatus(BookingStatus.REJECTED);
         long bookingId = 1;
@@ -157,7 +157,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingById_successful_whenUserIsOwner() {
+    public void findBookingByIdSuccessfulWhenUserIsOwner() {
         long bookingId = 1;
         long userId = 1;
         UserDto userDto = UserMapper.toUserDto(owner);
@@ -171,7 +171,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingById_successful_whenUserIsBooker() {
+    public void findBookingByIdSuccessfulWhenUserIsBooker() {
         long bookingId = 1;
         long userId = 2;
         UserDto userDto = UserMapper.toUserDto(user);
@@ -185,7 +185,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingById_fail_whenUserNotFound() {
+    public void findBookingByIdFailWhenUserNotFound() {
         long bookingId = 1;
         long userId = 1;
         UserDto userDto = UserMapper.toUserDto(owner);
@@ -195,7 +195,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingById_fail_whenBookingNotFound() {
+    public void findBookingByIdFailWhenBookingNotFound() {
         long bookingId = 1;
         long userId = 2;
         UserDto userDto = UserMapper.toUserDto(user);
@@ -206,7 +206,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfUser_successful() {
+    public void findBookingsOfUserSuccessful() {
         BookingState state = BookingState.ALL;
         long userId = 2;
         int from = 0;
@@ -224,7 +224,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfUser_fail_userNotFound() {
+    public void findBookingsOfUserFailUserNotFound() {
         BookingState state = BookingState.ALL;
         long userId = 1;
         int from = 0;
@@ -237,7 +237,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfUser_fail_unknownState() {
+    public void findBookingsOfUserFailUnknownState() {
         BookingState state = BookingState.UNSUPPORTED_STATUS;
         long userId = 2;
         int from = 0;
@@ -251,7 +251,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfOwner_successful() {
+    public void findBookingsOfOwnerSuccessful() {
         BookingState state = BookingState.ALL;
         long userId = 1;
         int from = 0;
@@ -269,7 +269,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfOwner_fail_userNotFound() {
+    public void findBookingsOfOwnerFailUserNotFound() {
         BookingState state = BookingState.ALL;
         long userId = 2;
         int from = 0;
@@ -283,7 +283,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void findBookingsOfOwner_fail_unknownState() {
+    public void findBookingsOfOwnerFailUnknownState() {
         BookingState state = BookingState.UNSUPPORTED_STATUS;
         long userId = 2;
         int from = 0;

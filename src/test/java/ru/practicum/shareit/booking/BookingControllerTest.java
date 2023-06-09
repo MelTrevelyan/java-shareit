@@ -37,14 +37,15 @@ public class BookingControllerTest {
     public void createBookings() {
         User user = new User(2L, "user", "user@mail.ru");
         Item item = new Item(1L, "item", "description", true, null, null);
-        bookingDto = new BookingDto(1L, 1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusDays(1), null);
+        bookingDto = new BookingDto(1L, 1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusDays(1),
+                null);
         bookingOutDto = new BookingOutDto(1L, LocalDateTime.now().plusHours(1),
                 LocalDateTime.now().plusDays(1), BookingStatus.WAITING, user, item);
     }
 
     @SneakyThrows
     @Test
-    void findBookingsOfUser_whenWithoutParams_thenStatusOkAndParamIsDefault() {
+    void findBookingsOfUserWhenWithoutParamsThenStatusOkAndParamIsDefault() {
         long userId = 1L;
         List<BookingOutDto> bookings = List.of(bookingOutDto);
         when(bookingService.findBookingsOfUser(BookingState.ALL, userId, 0, 10))
@@ -63,7 +64,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfUser_whenParamStartLessZero_thenStatusBadRequest() {
+    void findBookingsOfUserWhenParamStartLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings")
@@ -77,7 +78,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfUser_whenParamSizeLessZero_thenStatusBadRequest() {
+    void findBookingsOfUserWhenParamSizeLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings")
@@ -91,7 +92,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfUser_whenParamSizeIsZero_thenStatusBadRequest() {
+    void findBookingsOfUserWhenParamSizeIsZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings")
@@ -105,7 +106,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfUser_whenWithParams_thenStatusOkAndReturnCollection() {
+    void findBookingsOfUserWhenWithParamsThenStatusOkAndReturnCollection() {
         long userId = 1L;
         List<BookingOutDto> bookings = List.of(bookingOutDto);
         when(bookingService.findBookingsOfUser(BookingState.WAITING, userId, 0, 10))
@@ -127,7 +128,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfOwner_whenWithoutParams_thenStatusOkAndParamIsDefault() {
+    void findBookingsOfOwnerWhenWithoutParamsThenStatusOkAndParamIsDefault() {
         long userId = 1L;
         List<BookingOutDto> bookings = List.of(bookingOutDto);
         when(bookingService.findBookingsOfOwner(BookingState.ALL, userId, 0, 10))
@@ -146,7 +147,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfOwner_whenParamStartLessZero_thenStatusBadRequest() {
+    void findBookingsOfOwnerWhenParamStartLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings/owner")
@@ -160,7 +161,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfOwner_whenParamSizeLessZero_thenStatusBadRequest() {
+    void findBookingsOfOwnerWhenParamSizeLessZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings/owner")
@@ -174,7 +175,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfOwner_whenParamSizeIsZero_thenStatusBadRequest() {
+    void findBookingsOfOwnerWhenParamSizeIsZeroThenStatusBadRequest() {
         long userId = 1L;
 
         mvc.perform(get("/bookings/owner")
@@ -188,7 +189,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingsOfOwner_whenWithParams_thenStatusOkAndReturnCollection() {
+    void findBookingsOfOwnerWhenWithParamsThenStatusOkAndReturnCollection() {
         long userId = 1L;
         List<BookingOutDto> bookings = List.of(bookingOutDto);
         when(bookingService.findBookingsOfOwner(BookingState.WAITING, userId, 0, 10))
@@ -210,7 +211,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void findBookingById_whenInvoke_thenReturnBookingDtoFullOut() {
+    void findBookingByIdWhenInvokeThenReturnBookingDtoFullOut() {
         long userId = 1L;
         long bookingId = 2L;
         when(bookingService.findBookingById(bookingId, userId)).thenReturn(bookingOutDto);
@@ -227,7 +228,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void createBooking_whenStartDateIsNull_thenReturnBadRequest() {
+    void createBookingWhenStartDateIsNullThenReturnBadRequest() {
         long userId = 1L;
         bookingDto.setStart(null);
 
@@ -242,7 +243,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void createBooking_whenEndDateIsNull_thenReturnBadRequest() {
+    void createBookingWhenEndDateIsNullThenReturnBadRequest() {
         long userId = 1L;
         bookingDto.setEnd(null);
 
@@ -257,7 +258,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void createBooking_whenItemIdIsNull_thenReturnBadRequest() {
+    void createBookingWhenItemIdIsNullThenReturnBadRequest() {
         long userId = 1L;
         bookingDto.setItemId(null);
 
@@ -272,7 +273,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    public void createBooking_successful_thenReturnStatusIsOk() {
+    public void createBookingSuccessfulThenReturnStatusIsOk() {
         long userId = 1;
         when(bookingService.create(bookingDto, userId)).thenReturn(bookingOutDto);
 
@@ -290,7 +291,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void setBookingApproval_whenWithoutParam_thenReturnStatusIs500() {
+    void setBookingApprovalWhenWithoutParamThenReturnStatusIs500() {
         long userId = 1L;
         long bookingId = 2L;
         when(bookingService.setBookingApproval(userId, true, bookingId)).thenReturn(bookingOutDto);
@@ -304,7 +305,7 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
-    void setBookingApproval_whenWithParam_thenReturnStatusIsOk() {
+    void setBookingApprovalWhenWithParamThenReturnStatusIsOk() {
         long userId = 1L;
         long bookingId = 2L;
         when(bookingService.setBookingApproval(userId, true, bookingId)).thenReturn(bookingOutDto);

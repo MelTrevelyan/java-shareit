@@ -28,7 +28,7 @@ public class UserServiceImplTest {
     private final User user = new User(1L, "test", "test@ya.ru");
 
     @Test
-    void findUserById_whenUserFound_thenReturnedUserDto() {
+    void findUserByIdWhenUserFoundThenReturnedUserDto() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         UserDto result = userService.findUserById(1L);
@@ -38,14 +38,14 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void findUserById_whenUserNotFound_thenUserNotFoundExceptionThrown() {
+    void findUserByIdWhenUserNotFoundThenUserNotFoundExceptionThrown() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userService.findUserById(1L));
     }
 
     @Test
-    void createNewUser_successful_thenReturnUserDto() {
+    void createNewUserSuccessfulThenReturnUserDto() {
         UserDto expectedUserDto = UserMapper.toUserDto(user);
         expectedUserDto.setId(1L);
         UserDto userDtoToCreate = UserMapper.toUserDto(user);
@@ -59,7 +59,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void createNewUser_failed_thenThrowUserValidationException() {
+    void createNewUserFailedThenThrowUserValidationException() {
         UserDto userDto = UserMapper.toUserDto(user);
         when(userRepository.save(user)).thenThrow(new UserValidationException("Email must not be null"));
 
@@ -67,7 +67,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void getAllUsers_successful_thenReturnListOfUser() {
+    void getAllUsersSuccessfulThenReturnListOfUser() {
         List<UserDto> userDtos = UserMapper.mapToUserDto(List.of(user));
 
         when(userRepository.findAll()).thenReturn(List.of(user));
@@ -79,7 +79,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void shouldUpdateUser_successfully_thenReturnUserDto() {
+    void shouldUpdateUserSuccessfullyThenReturnUserDto() {
         UserDto userUpdate = UserDto.builder()
                 .id(1L)
                 .name("name")
@@ -97,7 +97,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void shouldNotUpdateUser_thenThrowEmailConflictException() {
+    void shouldNotUpdateUserThenThrowEmailConflictException() {
         UserDto userUpdate = UserDto.builder()
                 .id(1L)
                 .build();
