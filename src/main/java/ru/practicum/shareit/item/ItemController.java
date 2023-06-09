@@ -9,6 +9,8 @@ import ru.practicum.shareit.item.dto.ItemViewDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Validated
@@ -24,8 +26,10 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemViewDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return itemService.getAllItemsByOwner(userId);
+    public List<ItemViewDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                                @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                @Positive @RequestParam(defaultValue = "10") int size) {
+        return itemService.getAllItemsByOwner(userId, from, size);
     }
 
     @PostMapping
@@ -46,8 +50,10 @@ public class ItemController {
     }
 
     @GetMapping(value = "/search")
-    public List<ItemDto> searchItemByText(@NotNull @RequestParam String text) {
-        return itemService.searchItemByText(text);
+    public List<ItemDto> searchItemByText(@NotNull @RequestParam String text,
+                                          @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                          @Positive @RequestParam(defaultValue = "10") int size) {
+        return itemService.searchItemByText(text, from, size);
     }
 
     @PostMapping(value = "/{itemId}/comment")
