@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Valid UserCreateDto userDto) {
+        log.info("Creating new user");
         return userClient.createUser(userDto);
     }
 
@@ -30,16 +31,19 @@ public class UserController {
 
     @PatchMapping(value = "/{userId}")
     public ResponseEntity<Object> updateUser(@RequestBody @Valid UserUpdateDto userDto, @PathVariable Long userId) {
+        log.info("Updating user with id {}", userId);
         return userClient.updateUser(userId, userDto);
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
+        log.info("Deleting user with id {}", userId);
         return userClient.deleteUser(userId);
     }
 
     @GetMapping("/{userId}")
     public ResponseEntity<Object> findUserById(@PathVariable Long userId) {
+        log.info("Find user by id {}", userId);
         return userClient.findUserById(userId);
     }
 }

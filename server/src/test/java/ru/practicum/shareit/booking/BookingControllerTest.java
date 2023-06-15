@@ -17,8 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,67 +43,6 @@ public class BookingControllerTest {
                 LocalDateTime.now().plusDays(1), BookingStatus.WAITING, user, item);
     }
 
-    //    @SneakyThrows
-//    @Test
-//    void findBookingsOfUserWhenWithoutParamsThenStatusOkAndParamIsDefault() {
-//        long userId = 1L;
-//        List<BookingOutDto> bookings = List.of(bookingOutDto);
-//        when(bookingService.findBookingsOfUser(BookingState.ALL, userId, 0, 10))
-//                .thenReturn(bookings);
-//
-//        String result = mvc.perform(get("/bookings")
-//                        .header("X-Sharer-User-Id", userId))
-//                .andExpect(status().isOk())
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        verify(bookingService).findBookingsOfUser(BookingState.ALL, userId, 0, 10);
-//        assertEquals(objectMapper.writeValueAsString(bookings), result);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfUserWhenParamStartLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(-10))
-//                        .param("size", String.valueOf(20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfUser(BookingState.ALL, userId, -10, 20);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfUserWhenParamSizeLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(-20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfUser(BookingState.ALL, userId, 10, -20);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfUserWhenParamSizeIsZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(0)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfUser(BookingState.ALL, userId, 0, 0);
-//    }
-//
     @SneakyThrows
     @Test
     void findBookingsOfUserWhenWithParamsThenStatusOkAndReturnCollection() {
@@ -127,68 +65,6 @@ public class BookingControllerTest {
         assertEquals(objectMapper.writeValueAsString(bookings), result);
     }
 
-    //
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfOwnerWhenWithoutParamsThenStatusOkAndParamIsDefault() {
-//        long userId = 1L;
-//        List<BookingOutDto> bookings = List.of(bookingOutDto);
-//        when(bookingService.findBookingsOfOwner(BookingState.ALL, userId, 0, 10))
-//                .thenReturn(bookings);
-//
-//        String result = mvc.perform(get("/bookings/owner")
-//                        .header("X-Sharer-User-Id", userId))
-//                .andExpect(status().isOk())
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        verify(bookingService).findBookingsOfOwner(BookingState.ALL, userId, 0, 10);
-//        assertEquals(objectMapper.writeValueAsString(bookings), result);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfOwnerWhenParamStartLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings/owner")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(-10))
-//                        .param("size", String.valueOf(20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfOwner(BookingState.ALL, userId, -10, 10);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfOwnerWhenParamSizeLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings/owner")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(-20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfOwner(BookingState.ALL, userId, 0, -10);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void findBookingsOfOwnerWhenParamSizeIsZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/bookings/owner")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(0)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).findBookingsOfOwner(BookingState.ALL, userId, 0, 0);
-//    }
-//
     @SneakyThrows
     @Test
     void findBookingsOfOwnerWhenWithParamsThenStatusOkAndReturnCollection() {
@@ -228,51 +104,6 @@ public class BookingControllerTest {
         assertEquals(objectMapper.writeValueAsString(bookingOutDto), result);
     }
 
-    //    @SneakyThrows
-//    @Test
-//    void createBookingWhenStartDateIsNullThenReturnBadRequest() {
-//        long userId = 1L;
-//        bookingDto.setStart(null);
-//
-//        mvc.perform(post("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .contentType("application/json")
-//                        .content(objectMapper.writeValueAsString(bookingDto)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).create(bookingDto, userId);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void createBookingWhenEndDateIsNullThenReturnBadRequest() {
-//        long userId = 1L;
-//        bookingDto.setEnd(null);
-//
-//        mvc.perform(post("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .contentType("application/json")
-//                        .content(objectMapper.writeValueAsString(bookingDto)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).create(bookingDto, userId);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void createBookingWhenItemIdIsNullThenReturnBadRequest() {
-//        long userId = 1L;
-//        bookingDto.setItemId(null);
-//
-//        mvc.perform(post("/bookings")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .contentType("application/json")
-//                        .content(objectMapper.writeValueAsString(bookingDto)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(bookingService, never()).create(bookingDto, userId);
-//    }
-//
     @SneakyThrows
     @Test
     public void createBookingSuccessfulThenReturnStatusIsOk() {
@@ -291,20 +122,20 @@ public class BookingControllerTest {
         assertEquals(objectMapper.writeValueAsString(bookingOutDto), result);
     }
 
-    //    @SneakyThrows
-//    @Test
-//    void setBookingApprovalWhenWithoutParamThenReturnStatusIs500() {
-//        long userId = 1L;
-//        long bookingId = 2L;
-//        when(bookingService.setBookingApproval(userId, true, bookingId)).thenReturn(bookingOutDto);
-//
-//        mvc.perform(patch("/bookings/{bookingId}", bookingId)
-//                        .header("X-Sharer-User-Id", userId))
-//                .andExpect(status().is5xxServerError());
-//
-//        verify(bookingService, never()).setBookingApproval(userId, true, bookingId);
-//    }
-//
+    @SneakyThrows
+    @Test
+    void setBookingApprovalWhenWithoutParamThenReturnStatusIs500() {
+        long userId = 1L;
+        long bookingId = 2L;
+        when(bookingService.setBookingApproval(userId, true, bookingId)).thenReturn(bookingOutDto);
+
+        mvc.perform(patch("/bookings/{bookingId}", bookingId)
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().is5xxServerError());
+
+        verify(bookingService, never()).setBookingApproval(userId, true, bookingId);
+    }
+
     @SneakyThrows
     @Test
     void setBookingApprovalWhenWithParamThenReturnStatusIsOk() {

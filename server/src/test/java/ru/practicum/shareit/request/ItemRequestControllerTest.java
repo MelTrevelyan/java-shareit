@@ -78,43 +78,6 @@ public class ItemRequestControllerTest {
         assertEquals(objectMapper.writeValueAsString(outDto), result);
     }
 
-//    @SneakyThrows
-//    @Test
-//    void getRequestsOfOthersWhenWithoutParamsThenStatusOkAndParamIsDefault() {
-//        long userId = 1L;
-//        List<ItemRequestOutDto> requests = List.of(outDto);
-//        when(service.getRequestsOfOthers(userId, 0, 10)).thenReturn(requests);
-//
-//        String result = mvc.perform(get("/requests/all")
-//                        .header("X-Sharer-User-Id", userId))
-//                .andExpect(status().isOk())
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        verify(service).getRequestsOfOthers(userId, 0, 10);
-//        assertEquals(objectMapper.writeValueAsString(requests), result);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void getRequestsOfOthersWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
-//        long userId = 1L;
-//        List<ItemRequestOutDto> requests = List.of(outDto);
-//        when(service.getRequestsOfOthers(userId, 1, 10)).thenReturn(requests);
-//
-//        String result = mvc.perform(get("/requests/all")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(1)))
-//                .andExpect(status().isOk())
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        verify(service).getRequestsOfOthers(userId, 1, 10);
-//        assertEquals(objectMapper.writeValueAsString(requests), result);
-//    }
-
     @SneakyThrows
     @Test
     void getRequestsOfOthersWhenWithParamsThenStatusOk() {
@@ -134,81 +97,6 @@ public class ItemRequestControllerTest {
         verify(service).getRequestsOfOthers(userId, 2, 20);
         assertEquals(objectMapper.writeValueAsString(requests), result);
     }
-
-//    @SneakyThrows
-//    @Test
-//    void getListOfItemRequestByAllUsersWhenParamFromLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//        List<ItemRequestOutDto> requests = List.of(outDto);
-//        when(service.getRequestsOfOthers(userId, -10, 20)).thenReturn(requests);
-//
-//        mvc.perform(get("/requests/all")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(-10))
-//                        .param("size", String.valueOf(20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(service, never()).getRequestsOfOthers(userId, -10, 20);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void getRequestsOfOthersWhenParamSizeLessZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//
-//        mvc.perform(get("/requests/all")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(-20)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(service, never()).getRequestsOfOthers(userId, 0, -20);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void getListOfItemRequestByAllUsersWhenParamSizeIsZeroThenStatusBadRequest() {
-//        long userId = 1L;
-//        List<ItemRequestOutDto> requests = List.of(outDto);
-//
-//        mvc.perform(get("/requests/all")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .param("from", String.valueOf(0))
-//                        .param("size", String.valueOf(0)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(service, never()).getRequestsOfOthers(userId, 0, 0);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void createItemRequestWhenRequestIsNullThenReturnBadRequest() {
-//        long userId = 1L;
-//        ItemRequestInDto itemRequestDtoIn = new ItemRequestInDto(null);
-//
-//        mvc.perform(post("/requests")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .contentType("application/json")
-//                        .content(objectMapper.writeValueAsString(itemRequestDtoIn)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(service, never()).create(itemRequestDtoIn, userId);
-//    }
-//
-//    @SneakyThrows
-//    @Test
-//    void createItemRequestWhenRequestIsBlankThenReturnBadRequest() {
-//        long userId = 1L;
-//        ItemRequestInDto itemRequestDtoIn = new ItemRequestInDto("");
-//
-//        mvc.perform(post("/requests")
-//                        .header("X-Sharer-User-Id", userId)
-//                        .contentType("application/json")
-//                        .content(objectMapper.writeValueAsString(itemRequestDtoIn)))
-//                .andExpect(status().isBadRequest());
-//
-//        verify(service, never()).create(itemRequestDtoIn, userId);
-//    }
 
     @SneakyThrows
     @Test
