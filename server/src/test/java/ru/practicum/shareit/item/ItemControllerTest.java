@@ -82,6 +82,64 @@ public class ItemControllerTest {
 
     @SneakyThrows
     @Test
+    void getAllItemsWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
+        long userId = 1L;
+        List<ItemViewDto> items = List.of(ItemViewDto.builder().build());
+        when(itemService.getAllItemsByOwner(userId, 2, 10)).thenReturn(items);
+
+        String result = mockMvc.perform(get("/items")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("from", String.valueOf(2)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(itemService).getAllItemsByOwner(userId, 2, 10);
+        assertEquals(objectMapper.writeValueAsString(items), result);
+    }
+
+    @SneakyThrows
+    @Test
+    void searchItemByTextWhenWithoutParamsThenStatusOkAndParamIsDefault() {
+        long userId = 1L;
+        List<ItemDto> items = List.of(itemDto);
+        when(itemService.searchItemByText("item", 0, 10)).thenReturn(items);
+
+        String result = mockMvc.perform(get("/items/search")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("text", "item"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(itemService).searchItemByText("item", 0, 10);
+        assertEquals(objectMapper.writeValueAsString(items), result);
+    }
+
+    @SneakyThrows
+    @Test
+    void searchItemByTextWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
+        long userId = 1L;
+        List<ItemDto> items = List.of(itemDto);
+        when(itemService.searchItemByText("item", 2, 10)).thenReturn(items);
+
+        String result = mockMvc.perform(get("/items/search")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("from", String.valueOf(2))
+                        .param("text", "item"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(itemService).searchItemByText("item", 2, 10);
+        assertEquals(objectMapper.writeValueAsString(items), result);
+    }
+
+    @SneakyThrows
+    @Test
     void searchItemByTextWhenWithParamsThenStatusOk() {
         long userId = 1L;
         String search = "item";

@@ -80,6 +80,43 @@ public class ItemRequestControllerTest {
 
     @SneakyThrows
     @Test
+    void getRequestsOfOthersWhenWithoutParamsThenStatusOkAndParamIsDefault() {
+        long userId = 1L;
+        List<ItemRequestOutDto> requests = List.of(outDto);
+        when(service.getRequestsOfOthers(userId, 0, 10)).thenReturn(requests);
+
+        String result = mvc.perform(get("/requests/all")
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(service).getRequestsOfOthers(userId, 0, 10);
+        assertEquals(objectMapper.writeValueAsString(requests), result);
+    }
+
+    @SneakyThrows
+    @Test
+    void getRequestsOfOthersWhenWithoutSizeParamThenStatusOkAndSizeParamIsDefault() {
+        long userId = 1L;
+        List<ItemRequestOutDto> requests = List.of(outDto);
+        when(service.getRequestsOfOthers(userId, 1, 10)).thenReturn(requests);
+
+        String result = mvc.perform(get("/requests/all")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("from", String.valueOf(1)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(service).getRequestsOfOthers(userId, 1, 10);
+        assertEquals(objectMapper.writeValueAsString(requests), result);
+    }
+
+    @SneakyThrows
+    @Test
     void getRequestsOfOthersWhenWithParamsThenStatusOk() {
         long userId = 1L;
         List<ItemRequestOutDto> requests = List.of(outDto);

@@ -28,8 +28,8 @@ public class ItemRequestController {
 
     @GetMapping("/all")
     public List<ItemRequestOutDto> getRequestsOfOthers(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                       @RequestParam int from,
-                                                       @RequestParam int size) {
+                                                       @RequestParam(defaultValue = "0") int from,
+                                                       @RequestParam(defaultValue = "10") int size) {
         return requestService.getRequestsOfOthers(userId, from, size);
     }
 

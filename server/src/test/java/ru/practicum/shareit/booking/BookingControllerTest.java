@@ -45,6 +45,25 @@ public class BookingControllerTest {
 
     @SneakyThrows
     @Test
+    void findBookingsOfUserWhenWithoutParamsThenStatusOkAndParamIsDefault() {
+        long userId = 1L;
+        List<BookingOutDto> bookings = List.of(bookingOutDto);
+        when(bookingService.findBookingsOfUser(BookingState.ALL, userId, 0, 10))
+                .thenReturn(bookings);
+
+        String result = mvc.perform(get("/bookings")
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(bookingService).findBookingsOfUser(BookingState.ALL, userId, 0, 10);
+        assertEquals(objectMapper.writeValueAsString(bookings), result);
+    }
+
+    @SneakyThrows
+    @Test
     void findBookingsOfUserWhenWithParamsThenStatusOkAndReturnCollection() {
         long userId = 1L;
         List<BookingOutDto> bookings = List.of(bookingOutDto);
@@ -62,6 +81,25 @@ public class BookingControllerTest {
                 .getContentAsString();
 
         verify(bookingService).findBookingsOfUser(BookingState.WAITING, userId, 0, 10);
+        assertEquals(objectMapper.writeValueAsString(bookings), result);
+    }
+
+    @SneakyThrows
+    @Test
+    void findBookingsOfOwnerWhenWithoutParamsThenStatusOkAndParamIsDefault() {
+        long userId = 1L;
+        List<BookingOutDto> bookings = List.of(bookingOutDto);
+        when(bookingService.findBookingsOfOwner(BookingState.ALL, userId, 0, 10))
+                .thenReturn(bookings);
+
+        String result = mvc.perform(get("/bookings/owner")
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        verify(bookingService).findBookingsOfOwner(BookingState.ALL, userId, 0, 10);
         assertEquals(objectMapper.writeValueAsString(bookings), result);
     }
 
