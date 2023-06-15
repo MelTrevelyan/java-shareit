@@ -36,8 +36,8 @@ public class UserClient extends BaseClient {
         return patch("/" + userId, updateDto);
     }
 
-    public void deleteUser(Long userId) {
-        delete("/" + userId, userId);
+    public ResponseEntity<Object> deleteUser(Long userId) {
+        return delete("/" + userId);
     }
 
     public ResponseEntity<Object> findUserById(Long userId) {
