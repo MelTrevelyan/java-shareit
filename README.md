@@ -49,10 +49,13 @@ The project is developed using:
 
 ![shareIt](https://github.com/MelTrevelyan/java-shareit/assets/114815793/77fa1b57-010b-4484-a7be-4af584e99381)
 
-## Installation
+## Application launch options
 
-In order to use the app, follow the instructions:
+- Usind «docker-compose up» command (launch via docker);
 
-1. Clone the repository: https://github.com/MelTrevelyan/java-shareit.git
-2. Navigate to the following directory via console: `java-shareit`
-3. Compile the Java source files using command: `javac *.java`
+- Using IntelliJ IDEA:
+
+«server»: server\src\main\java\ru\practicum\shareit\ShareItServer -> "run";
+
+«gateway»: gateway\src\main\java\ru\practicum\shareit\ShareItGateway -> "run"
+
